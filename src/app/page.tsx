@@ -15,6 +15,7 @@ export default function Home() {
         objectFit={"cover"}
         className="h-min-screen"
       />
+
       <SelectTravelBox />
     </main>
   );
