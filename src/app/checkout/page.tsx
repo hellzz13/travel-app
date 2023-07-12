@@ -1,5 +1,6 @@
 "use client";
-import ItemCheckout from "@/components/ItemCheckout";
+import InputBase from "@/components/Inputs/InputBase";
+import ItemDetailCheckout from "@/components/ItemDetailCheckout";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -16,7 +17,7 @@ const Checkout = () => {
         <div className="col-span-full py-6 px-4 sm:py-12 lg:col-span-6 lg:py-24">
           <div className="mx-auto w-full max-w-lg">
             <button
-              className="h-8 flex items-center justify-between cursor-pointer my-12 hover:text-slate-600 hover:bg-gray-50 rounded-lg px-2"
+              className="h-8 flex items-center justify-between cursor-pointer mb-12 hover:text-slate-600 hover:bg-gray-50 rounded-lg px-2"
               onClick={back}
             >
               <BiSolidChevronLeft className="h-6 w-6 cursor-pointer" />
@@ -28,6 +29,29 @@ const Checkout = () => {
               <span className="mt-2 block h-1 w-10 bg-cyan-500 sm:w-20"></span>
             </h1>
             <form action="" className="mt-10 flex flex-col space-y-4">
+              <div className="grid grid-cols-12 gap-3">
+                <h2 className="text-base font-medium text-gray-700 sm:text-lg col-span-full">
+                  Dados do passageiro principal
+                </h2>
+                <div className="col-span-full md:col-span-6">
+                  <InputBase
+                    title="Nome"
+                    name="name"
+                    placeholder="Nome do passageiro principal"
+                  />
+                </div>
+                <div className="col-span-full md:col-span-6">
+                  <InputBase
+                    title="E-mail"
+                    name="email"
+                    placeholder="E-mail do passageiro principal"
+                  />
+                </div>
+              </div>
+              <div className=" border-b border-gray-900/10 pb-6" />
+              <h3 className="text-base font-medium text-gray-700 sm:text-lg">
+                Dados de pagamento
+              </h3>
               <div>
                 <label
                   htmlFor="email"
@@ -135,7 +159,7 @@ const Checkout = () => {
         </div>
         <div className="relative col-span-full flex flex-col py-6 sm:py-12 lg:col-span-4 lg:py-24">
           <div className="flex justify-center">
-            <ItemCheckout />
+            <ItemDetailCheckout />
           </div>
           <div>
             <Image

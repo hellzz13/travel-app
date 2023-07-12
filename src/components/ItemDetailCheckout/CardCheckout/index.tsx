@@ -12,24 +12,20 @@ export default function CardCheckout() {
         />
       </div>
 
-      <div className="relative flex flex-1 flex-col justify-between">
-        <div className="sm:col-gap-5 sm:grid sm:grid-cols-2">
-          <div className="pr-8 sm:pr-5">
-            <p className="text-base font-semibold text-gray-900">xxxxxxxx</p>
-            <p className="mx-0 mt-1 mb-0 text-sm text-gray-400">xxxxxxxx</p>
-          </div>
-
-          <div className="mt-4 flex items-end justify-between sm:mt-0 sm:items-start sm:justify-end">
-            <p className="shrink-0 w-20 text-base font-semibold text-gray-900 sm:order-2 sm:ml-8 sm:text-right">
-              $1259.00
-            </p>
-          </div>
+      <div className="flex flex-1 justify-between">
+        <div className="pr-8 sm:pr-5">
+          <p className="text-base font-semibold text-gray-900">
+            Origem: São Paulo
+          </p>
+          <p className="mx-0 mt-1 mb-0 text-sm text-gray-400">
+            Destino: Nova York
+          </p>
         </div>
 
-        <div className="absolute top-0 right-0 flex sm:bottom-0 sm:top-auto">
+        <div className="flex">
           <button
             type="button"
-            className="flex rounded p-2 text-center text-gray-500 transition-all duration-200 ease-in-out focus:shadow hover:text-gray-900"
+            className="flex h-8 w-8 rounded p-2 text-center text-gray-500 transition-all duration-200 ease-in-out focus:shadow hover:text-gray-900"
           >
             <svg
               className="h-5 w-5"

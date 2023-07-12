@@ -1,6 +1,6 @@
 import CardCheckout from "./CardCheckout";
 
-export default function ItemCheckout() {
+export default function ItemDetailCheckout() {
   return (
     <div className="mt-8 max-w-md md:mt-12 z-10 w-full px-6">
       <div className="rounded-3xl bg-white shadow-lg">

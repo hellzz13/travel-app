@@ -1,12 +1,19 @@
 import { InputHTMLAttributes } from "react";
 
-type ITextInput = InputHTMLAttributes<HTMLInputElement> & {};
+type ITextInput = InputHTMLAttributes<HTMLInputElement> & {
+  title: string;
+};
 
-export default function InputText({ name, placeholder, ...props }: ITextInput) {
+export default function InputBase({
+  name,
+  placeholder,
+  title,
+  ...props
+}: ITextInput) {
   return (
     <div>
       <label htmlFor={name} className="sr-only">
-        {name}
+        {title}
       </label>
       <div className="relative rounded-md shadow-sm">
         <input
