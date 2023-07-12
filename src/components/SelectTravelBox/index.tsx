@@ -10,7 +10,7 @@ export default function SelectTravelBox() {
   return (
     <div className="rounded-xl border text-black p-6 shadow-md relative bg-white">
       <h3 className="font-medium text-base text-zinc-500 mb-4">Buscar</h3>
-      <div className="flex gap-3">
+      <div className="flex flex-col md:flex-row gap-3">
         <InputText name="origin" placeholder="Origem" />
         <InputText name="destiny" placeholder="Destíno" />
         <InputText name="dateOrigin" type="date" placeholder="Data origem" />
