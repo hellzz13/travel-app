@@ -22,7 +22,7 @@ export default function CardCheckout() {
           </p>
         </div>
 
-        <div className="flex">
+        {/* <div className="flex">
           <button
             type="button"
             className="flex h-8 w-8 rounded p-2 text-center text-gray-500 transition-all duration-200 ease-in-out focus:shadow hover:text-gray-900"
@@ -43,7 +43,7 @@ export default function CardCheckout() {
               ></path>
             </svg>
           </button>
-        </div>
+        </div> */}
       </div>
     </li>
   );

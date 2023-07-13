@@ -1,9 +1,11 @@
 "use client";
-import InputBase from "@/components/Inputs/InputBase";
-import ItemDetailCheckout from "@/components/ItemDetailCheckout";
+import React, { useState } from "react";
 import Image from "next/image";
+import InputBase from "@/components/Inputs/InputBase";
+import InputMask, { Props } from "react-input-mask";
+import ItemDetailCheckout from "@/components/ItemDetailCheckout";
+
 import { useRouter } from "next/navigation";
-import React from "react";
 import { BiSolidChevronLeft } from "react-icons/bi";
 
 const Checkout = () => {
@@ -67,38 +69,46 @@ const Checkout = () => {
                 <p className="text-xs font-semibold text-gray-500">Validade</p>
                 <div className="mr-6 flex flex-wrap">
                   <div className="my-1 w-20">
-                    <InputBase
-                      title="Mês"
-                      name="month"
-                      placeholder="Mês"
-                      type="text"
-                    />
+                    <InputMask mask={"99"}>
+                      <InputBase
+                        title="Mês"
+                        name="month"
+                        placeholder="Mês"
+                        type="text"
+                      />
+                    </InputMask>
                   </div>
-                  <div className="my-1 ml-3 mr-6 w-20">
-                    <InputBase
-                      title="Ano"
-                      name="year"
-                      placeholder="Ano"
-                      type="text"
-                    />
+                  <div className="my-1 ml-3 mr-3 w-20">
+                    <InputMask mask={"9999"}>
+                      <InputBase
+                        title="Ano"
+                        name="year"
+                        placeholder="Ano"
+                        type="text"
+                      />
+                    </InputMask>
                   </div>
                   <div className="w-20 my-1">
-                    <InputBase
-                      title="CVV"
-                      name="cvv"
-                      placeholder="CVV"
-                      type="text"
-                    />
+                    <InputMask mask={"999"}>
+                      <InputBase
+                        title="CVV"
+                        name="cvv"
+                        placeholder="CVV"
+                        type="text"
+                      />
+                    </InputMask>
                   </div>
                 </div>
               </div>
               <div>
-                <InputBase
-                  title="Nome do titular do cartão"
-                  name="cardName"
-                  placeholder="Nome do titular do cartão"
-                  type="text"
-                />
+                <InputMask mask="9999-9999-9999-9999" maskChar="*">
+                  <InputBase
+                    title="Nome do titular do cartão"
+                    name="cardName"
+                    placeholder="Nome do titular do cartão"
+                    type="text"
+                  />
+                </InputMask>
               </div>
             </form>
             <p className="mt-10 text-center text-sm font-semibold text-gray-500">
