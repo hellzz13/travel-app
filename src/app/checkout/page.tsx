@@ -38,6 +38,7 @@ const Checkout = () => {
                     title="Nome"
                     name="name"
                     placeholder="Nome do passageiro principal"
+                    type="text"
                   />
                 </div>
                 <div className="col-span-full md:col-span-6">
@@ -45,6 +46,7 @@ const Checkout = () => {
                     title="E-mail"
                     name="email"
                     placeholder="E-mail do passageiro principal"
+                    type="email"
                   />
                 </div>
               </div>
@@ -52,97 +54,50 @@ const Checkout = () => {
               <h3 className="text-base font-medium text-gray-700 sm:text-lg">
                 Dados de pagamento
               </h3>
-              <div>
-                <label
-                  htmlFor="email"
-                  className="text-xs font-semibold text-gray-500"
-                >
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="john.doe@mail.com"
-                  className="mt-1 block w-full rounded border-gray-300 bg-gray-50 py-3 px-4 text-sm placeholder-gray-300 shadow-sm outline-none transition focus:ring-2 focus:ring-teal-500"
-                />
-              </div>
-              <div className="relative">
-                <label
-                  htmlFor="card-number"
-                  className="text-xs font-semibold text-gray-500"
-                >
-                  Card number
-                </label>
-                <input
-                  type="text"
-                  id="card-number"
-                  name="card-number"
-                  placeholder="1234-5678-XXXX-XXXX"
-                  className="block w-full rounded border-gray-300 bg-gray-50 py-3 px-4 pr-10 text-sm placeholder-gray-300 shadow-sm outline-none transition focus:ring-2 focus:ring-teal-500"
-                />
-                {/* imagem do cartão de crédito */}
-                {/* <img
-                  src="/images/uQUFIfCYVYcLK0qVJF5Yw.png"
-                  alt=""
-                  className="absolute bottom-3 right-3 max-h-4"
-                /> */}
 
-                {/* imagem do cartão de crédito */}
+              <div>
+                <InputBase
+                  title="Número do cartão"
+                  placeholder="Número do cartão"
+                  name="cardNumber"
+                  type="text"
+                />
               </div>
               <div>
-                <p className="text-xs font-semibold text-gray-500">
-                  Expiration date
-                </p>
+                <p className="text-xs font-semibold text-gray-500">Validade</p>
                 <div className="mr-6 flex flex-wrap">
-                  <div className="my-1">
-                    <label htmlFor="month" className="sr-only">
-                      Select expiration month
-                    </label>
-                    <select
+                  <div className="my-1 w-20">
+                    <InputBase
+                      title="Mês"
                       name="month"
-                      id="month"
-                      className="cursor-pointer rounded border-gray-300 bg-gray-50 py-3 px-2 text-sm shadow-sm outline-none transition focus:ring-2 focus:ring-teal-500"
-                    >
-                      <option value="">Month</option>
-                    </select>
-                  </div>
-                  <div className="my-1 ml-3 mr-6">
-                    <label htmlFor="year" className="sr-only">
-                      Select expiration year
-                    </label>
-                    <select
-                      name="year"
-                      id="year"
-                      className="cursor-pointer rounded border-gray-300 bg-gray-50 py-3 px-2 text-sm shadow-sm outline-none transition focus:ring-2 focus:ring-teal-500"
-                    >
-                      <option value="">Year</option>
-                    </select>
-                  </div>
-                  <div className="relative my-1">
-                    <label htmlFor="security-code" className="sr-only">
-                      Security code
-                    </label>
-                    <input
+                      placeholder="Mês"
                       type="text"
-                      id="security-code"
-                      name="security-code"
-                      placeholder="Security code"
-                      className="block w-36 rounded border-gray-300 bg-gray-50 py-3 px-4 text-sm placeholder-gray-300 shadow-sm outline-none transition focus:ring-2 focus:ring-teal-500"
+                    />
+                  </div>
+                  <div className="my-1 ml-3 mr-6 w-20">
+                    <InputBase
+                      title="Ano"
+                      name="year"
+                      placeholder="Ano"
+                      type="text"
+                    />
+                  </div>
+                  <div className="w-20 my-1">
+                    <InputBase
+                      title="CVV"
+                      name="cvv"
+                      placeholder="CVV"
+                      type="text"
                     />
                   </div>
                 </div>
               </div>
               <div>
-                <label htmlFor="card-name" className="sr-only">
-                  Card name
-                </label>
-                <input
+                <InputBase
+                  title="Nome do titular do cartão"
+                  name="cardName"
+                  placeholder="Nome do titular do cartão"
                   type="text"
-                  id="card-name"
-                  name="card-name"
-                  placeholder="Name on the card"
-                  className="mt-1 block w-full rounded border-gray-300 bg-gray-50 py-3 px-4 text-sm placeholder-gray-300 shadow-sm outline-none transition focus:ring-2 focus:ring-teal-500"
                 />
               </div>
             </form>

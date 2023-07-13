@@ -10,7 +10,9 @@ export default function SelectTravelBox() {
 
   return (
     <div className="rounded-xl border text-black p-6 shadow-md bg-white z-20 mx-5">
-      <h3 className="font-medium text-base text-zinc-500 mb-4">Buscar</h3>
+      <h3 className="font-medium text-base text-zinc-500 mb-4">
+        Escolha seu destino!
+      </h3>
       <div className="flex flex-col md:flex-row gap-3">
         <Input title="Origem" name="origin" placeholder="Origem" />
         <Input title="Destino" name="destiny" placeholder="Destíno" />
