@@ -15,7 +15,7 @@ export default function PrimaryButton({
 }: PrimaryButtonProps) {
   return (
     <button
-      className="py-1.5 flex justify-center items-center px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white  bg-cyan-500 hover:bg-cyan-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+      className="py-1.5 flex justify-center items-center px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white  bg-cyan-500 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-600 transition-all duration-200 ease-in-out"
       {...rest}
     >
       {isLoading ? (

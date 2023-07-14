@@ -29,7 +29,7 @@ export default function SelectTravelBox() {
           placeholder="Data volta"
         />
 
-        <PrimaryButton title="Buscar" onClick={() => push("/checkout")} />
+        <PrimaryButton title="Reservar" onClick={() => push("/checkout")} />
       </div>
       <div className="flex sm:items-center mt-4 items-start justify-center flex-col sm:flex-row gap-3">
         <p className="font-medium text-base text-zinc-500">Passageiros:</p>

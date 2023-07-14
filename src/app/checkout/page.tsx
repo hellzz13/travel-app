@@ -1,17 +1,46 @@
 "use client";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import Image from "next/image";
-import InputBase from "@/components/Inputs/InputBase";
-import InputMask, { Props } from "react-input-mask";
+import InputMask from "react-input-mask";
 import ItemDetailCheckout from "@/components/ItemDetailCheckout";
 
 import { useRouter } from "next/navigation";
 import { BiSolidChevronLeft } from "react-icons/bi";
 
+import { Controller, useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 const Checkout = () => {
   const { back } = useRouter();
 
   const imgBg = "/tom-barrett-M0AWNxnLaMw-unsplash.jpg";
+
+  const CheckoutSchema = z.object({
+    name: z.string().nonempty("Nome é obrigatório"),
+    email: z.string().nonempty("E-mail é obrigatório"),
+    cardNumber: z.string().nonempty("Numero do cartão é obrigatório"),
+    year: z.string().nonempty("Ano obrigatório"),
+    month: z.string().nonempty("Mês obrigatório"),
+    cvv: z.string().nonempty("CVV obrigatório"),
+    cardName: z.string().nonempty("Nome do titular é obrigatório"),
+  });
+
+  type CheckoutFormData = z.infer<typeof CheckoutSchema>;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CheckoutFormData>({
+    resolver: zodResolver(CheckoutSchema),
+  });
+
+  const handleCheckout = useCallback(async (data: CheckoutFormData) => {
+    await console.log(data);
+  }, []);
+
+  console.log("errors", errors);
 
   return (
     <div className="relative mx-auto w-full bg-white">
@@ -19,37 +48,60 @@ const Checkout = () => {
         <div className="col-span-full py-6 px-4 sm:py-12 lg:col-span-6 lg:py-24">
           <div className="mx-auto w-full max-w-lg">
             <button
-              className="h-8 flex items-center justify-between cursor-pointer mb-12 hover:text-slate-600 hover:bg-gray-50 rounded-lg px-2"
+              className="h-8 flex items-center justify-between cursor-pointer mb-12 hover:text-gray-700 text-cyan-500 rounded-lg transition-all duration-200 ease-in-out"
               onClick={back}
             >
               <BiSolidChevronLeft className="h-6 w-6 cursor-pointer" />
-              <p className="font-semibold text-base mr-2">Voltar</p>
+              <p className="font-medium text-base mr-2">Voltar</p>
             </button>
 
             <h1 className="relative text-2xl font-medium text-gray-700 sm:text-3xl">
               Checkout
               <span className="mt-2 block h-1 w-10 bg-cyan-500 sm:w-20"></span>
             </h1>
-            <form action="" className="mt-10 flex flex-col space-y-4">
+            <form
+              id="checkoutForm"
+              className="mt-10 flex flex-col space-y-4"
+              onSubmit={handleSubmit(handleCheckout)}
+            >
               <div className="grid grid-cols-12 gap-3">
                 <h2 className="text-base font-medium text-gray-700 sm:text-lg col-span-full">
                   Dados do passageiro principal
                 </h2>
                 <div className="col-span-full md:col-span-6">
-                  <InputBase
-                    title="Nome"
-                    name="name"
-                    placeholder="Nome do passageiro principal"
-                    type="text"
-                  />
+                  <label className="sr-only">Nome</label>
+                  <div className="relative rounded-md shadow-sm">
+                    <input
+                      {...register("name")}
+                      type="text"
+                      name="name"
+                      placeholder="Nome do passageiro principal"
+                      className="form-input block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+
+                  {errors.name && (
+                    <span className="text-red-500 text-sm">
+                      {errors.name.message}
+                    </span>
+                  )}
                 </div>
                 <div className="col-span-full md:col-span-6">
-                  <InputBase
-                    title="E-mail"
-                    name="email"
-                    placeholder="E-mail do passageiro principal"
-                    type="email"
-                  />
+                  <label className="sr-only">E-mail</label>
+                  <div className="relative rounded-md shadow-sm">
+                    <input
+                      {...register("email")}
+                      type="email"
+                      name="email"
+                      placeholder="E-mail do passageiro principal"
+                      className="form-input block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                  {errors.email && (
+                    <span className="text-red-500 text-sm">
+                      {errors.email.message}
+                    </span>
+                  )}
                 </div>
               </div>
               <div className=" border-b border-gray-900/10 pb-6" />
@@ -58,57 +110,101 @@ const Checkout = () => {
               </h3>
 
               <div>
-                <InputBase
-                  title="Número do cartão"
-                  placeholder="Número do cartão"
-                  name="cardNumber"
-                  type="text"
-                />
+                <InputMask mask="9999-9999-9999-9999" maskChar="*">
+                  <div>
+                    <label className="sr-only">Numero do cartão</label>
+                    <input
+                      {...register("cardNumber")}
+                      name="cardNumber"
+                      placeholder="Número do cartão"
+                      type="text"
+                      className="form-input block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                </InputMask>
+                {errors.cardNumber && (
+                  <span className="text-red-500 text-sm">
+                    {errors.cardNumber.message}
+                  </span>
+                )}
               </div>
               <div>
                 <p className="text-xs font-semibold text-gray-500">Validade</p>
                 <div className="mr-6 flex flex-wrap">
-                  <div className="my-1 w-20">
+                  <div className="my-1 w-28">
                     <InputMask mask={"99"}>
-                      <InputBase
-                        title="Mês"
-                        name="month"
-                        placeholder="Mês"
-                        type="text"
-                      />
+                      <div>
+                        <label className="sr-only">Mês</label>
+                        <input
+                          {...register("month")}
+                          name="month"
+                          placeholder="Mês"
+                          type="text"
+                          className="form-input block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        />
+                      </div>
                     </InputMask>
+                    {errors.month && (
+                      <span className="text-red-500 text-sm">
+                        {errors.month.message}
+                      </span>
+                    )}
                   </div>
-                  <div className="my-1 ml-3 mr-3 w-20">
+                  <div className="my-1 ml-3 mr-3 w-28">
                     <InputMask mask={"9999"}>
-                      <InputBase
-                        title="Ano"
-                        name="year"
-                        placeholder="Ano"
-                        type="text"
-                      />
+                      <div>
+                        <label className="sr-only">Ano</label>
+                        <input
+                          {...register("year")}
+                          name="year"
+                          placeholder="Ano"
+                          type="text"
+                          className="form-input block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        />
+                      </div>
                     </InputMask>
+                    {errors.year && (
+                      <span className="text-red-500 text-sm">
+                        {errors.year.message}
+                      </span>
+                    )}
                   </div>
-                  <div className="w-20 my-1">
+                  <div className="w-28 my-1">
                     <InputMask mask={"999"}>
-                      <InputBase
-                        title="CVV"
-                        name="cvv"
-                        placeholder="CVV"
-                        type="text"
-                      />
+                      <div>
+                        <label className="sr-only">CVV</label>
+                        <input
+                          {...register("cvv")}
+                          name="cvv"
+                          placeholder="CVV"
+                          type="text"
+                          className="form-input block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        />
+                      </div>
                     </InputMask>
+                    {errors.cvv && (
+                      <span className="text-red-500 text-sm">
+                        {errors.cvv.message}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
               <div>
-                <InputMask mask="9999-9999-9999-9999" maskChar="*">
-                  <InputBase
-                    title="Nome do titular do cartão"
-                    name="cardName"
-                    placeholder="Nome do titular do cartão"
-                    type="text"
-                  />
-                </InputMask>
+                <label className="sr-only">Nome do titular do cartão</label>
+                <input
+                  {...register("cardName")}
+                  title="Nome do titular do cartão"
+                  name="cardName"
+                  placeholder="Nome do titular do cartão"
+                  type="text"
+                  className="form-input block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+                {errors.cardName && (
+                  <span className="text-red-500 text-sm">
+                    {errors.cardName.message}
+                  </span>
+                )}
               </div>
             </form>
             <p className="mt-10 text-center text-sm font-semibold text-gray-500">
