@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { ChangeEvent, useCallback, useState } from "react";
 import Image from "next/image";
 import InputMask from "react-input-mask";
 import ItemDetailCheckout from "@/components/ItemDetailCheckout";
@@ -7,9 +7,10 @@ import ItemDetailCheckout from "@/components/ItemDetailCheckout";
 import { useRouter } from "next/navigation";
 import { BiSolidChevronLeft } from "react-icons/bi";
 
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { maskCreditCardNumber, maskCreditCardValidity } from "@/utils/masks";
 
 const Checkout = () => {
   const { back } = useRouter();
@@ -19,10 +20,13 @@ const Checkout = () => {
   const CheckoutSchema = z.object({
     name: z.string().nonempty("Nome é obrigatório"),
     email: z.string().nonempty("E-mail é obrigatório"),
-    cardNumber: z.string().nonempty("Numero do cartão é obrigatório"),
-    year: z.string().nonempty("Ano obrigatório"),
-    month: z.string().nonempty("Mês obrigatório"),
-    cvv: z.string().nonempty("CVV obrigatório"),
+    cardNumber: z.string().min(19, { message: "Informe o número do cartão" }),
+    validity: z.string().min(5, { message: "Informe a validade" }),
+    cvv: z
+      .string()
+      .min(3, { message: "Informe o cvv" })
+      .transform((value) => Number(value)),
+
     cardName: z.string().nonempty("Nome do titular é obrigatório"),
   });
 
@@ -31,6 +35,7 @@ const Checkout = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<CheckoutFormData>({
     resolver: zodResolver(CheckoutSchema),
@@ -40,7 +45,19 @@ const Checkout = () => {
     await console.log(data);
   }, []);
 
-  console.log("errors", errors);
+  function handleCreditCardNumberChange(event: ChangeEvent<HTMLInputElement>) {
+    setValue("cardNumber", maskCreditCardNumber(event.target.value), {
+      shouldDirty: true,
+    });
+  }
+
+  function handleCreditCardValidityChange(
+    event: ChangeEvent<HTMLInputElement>
+  ) {
+    setValue("validity", maskCreditCardValidity(event.target.value), {
+      shouldDirty: true,
+    });
+  }
 
   return (
     <div className="relative mx-auto w-full bg-white">
@@ -110,18 +127,19 @@ const Checkout = () => {
               </h3>
 
               <div>
-                <InputMask mask="9999-9999-9999-9999" maskChar="*">
-                  <div>
-                    <label className="sr-only">Numero do cartão</label>
-                    <input
-                      {...register("cardNumber")}
-                      name="cardNumber"
-                      placeholder="Número do cartão"
-                      type="text"
-                      className="form-input block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </InputMask>
+                <div>
+                  <label className="sr-only">Numero do cartão</label>
+                  <input
+                    {...register("cardNumber")}
+                    name="cardNumber"
+                    placeholder="Número do cartão"
+                    type="text"
+                    className="form-input block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    onChange={handleCreditCardNumberChange}
+                    maxLength={19}
+                  />
+                </div>
+
                 {errors.cardNumber && (
                   <span className="text-red-500 text-sm">
                     {errors.cardNumber.message}
@@ -130,58 +148,40 @@ const Checkout = () => {
               </div>
               <div>
                 <p className="text-xs font-semibold text-gray-500">Validade</p>
-                <div className="mr-6 flex flex-wrap">
-                  <div className="my-1 w-28">
-                    <InputMask mask={"99"}>
-                      <div>
-                        <label className="sr-only">Mês</label>
-                        <input
-                          {...register("month")}
-                          name="month"
-                          placeholder="Mês"
-                          type="text"
-                          className="form-input block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        />
-                      </div>
-                    </InputMask>
-                    {errors.month && (
+                <div className="mr-6 flex flex-wrap gap-3">
+                  <div className="my-1 w-32">
+                    <div>
+                      <label className="sr-only">Validade</label>
+                      <input
+                        {...register("validity")}
+                        name="validity"
+                        placeholder="mm/aa"
+                        type="text"
+                        className="form-input block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        maxLength={5}
+                        onChange={handleCreditCardValidityChange}
+                      />
+                    </div>
+
+                    {errors.validity && (
                       <span className="text-red-500 text-sm">
-                        {errors.month.message}
+                        {errors.validity.message}
                       </span>
                     )}
                   </div>
-                  <div className="my-1 ml-3 mr-3 w-28">
-                    <InputMask mask={"9999"}>
-                      <div>
-                        <label className="sr-only">Ano</label>
-                        <input
-                          {...register("year")}
-                          name="year"
-                          placeholder="Ano"
-                          type="text"
-                          className="form-input block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        />
-                      </div>
-                    </InputMask>
-                    {errors.year && (
-                      <span className="text-red-500 text-sm">
-                        {errors.year.message}
-                      </span>
-                    )}
-                  </div>
+
                   <div className="w-28 my-1">
-                    <InputMask mask={"999"}>
-                      <div>
-                        <label className="sr-only">CVV</label>
-                        <input
-                          {...register("cvv")}
-                          name="cvv"
-                          placeholder="CVV"
-                          type="text"
-                          className="form-input block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        />
-                      </div>
-                    </InputMask>
+                    <div>
+                      <label className="sr-only">CVV</label>
+                      <input
+                        {...register("cvv")}
+                        name="cvv"
+                        placeholder="CVV"
+                        type="text"
+                        className="form-input block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        maxLength={3}
+                      />
+                    </div>
                     {errors.cvv && (
                       <span className="text-red-500 text-sm">
                         {errors.cvv.message}

@@ -39,7 +39,7 @@ export default function ItemDetailCheckout() {
               className="group inline-flex w-full items-center justify-center rounded-md bg-cyan-500 px-6 py-4 text-lg font-semibold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800"
             >
               Confirmar
-              <BsArrowRightShort />
+              <BsArrowRightShort className="group-hover:ml-8 ml-4 h-6 w-6 transition-all" />
             </button>
           </div>
         </div>
