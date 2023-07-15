@@ -6,7 +6,6 @@ export default function Home() {
 
   return (
     <main className="container flex min-h-screen justify-center items-center mx-auto bg-cyan-300">
-      {/* <div className="bg-cyan-300 w-full h-screen absolute top-0 shadow-md" /> */}
       <Image
         src={image}
         alt="paisagem praia, areia e mar"

@@ -1,7 +1,15 @@
+import { useContext } from "react";
 import CardCheckout from "./CardCheckout";
 import { BsArrowRightShort } from "react-icons/bs";
+import InfoContext from "@/context/InfoContext";
+import moment from "moment";
 
 export default function ItemDetailCheckout() {
+  const { dataCheckout } = useContext(InfoContext);
+
+  const tax = 100;
+  const ticket = 1250;
+
   return (
     <div className="mt-8 max-w-md md:mt-12 z-10 w-full px-6">
       <div className="rounded-3xl bg-white shadow-lg">
@@ -12,23 +20,71 @@ export default function ItemDetailCheckout() {
             </ul>
           </div>
 
-          {/* <hr className="mx-0 mt-6 mb-0 h-0 border-r-0 border-b-0 border-l-0 border-t border-solid border-gray-300" /> */}
+          <div className="mt-6 border-t border-b py-8 flex justify-between items-center">
+            <p className="text-sm font-semibold text-gray-900">
+              Data ida:
+              <span className="text-gray-400 ml-2">
+                {moment(dataCheckout?.dateOrigin).format("DD-MM-YYYY")}
+              </span>
+            </p>
+            <p className="text-sm font-semibold text-gray-900">
+              Data volta:
+              <span className="text-gray-400 ml-2">
+                {moment(dataCheckout?.dateDestiny).format("DD-MM-YYYY")}
+              </span>
+            </p>
+          </div>
+
+          <h3 className="font-bold text-gray-800 text-lg mt-6">Passageiros</h3>
+          <div className="flex items-center justify-between">
+            <p className="font-medium text-gray-400">Adultos:</p>
+            <p className="text-2xl font-semibold text-gray-900">
+              {dataCheckout?.adult || 0}
+            </p>
+          </div>
+          <div className="flex items-center justify-between">
+            <p className="font-medium text-gray-400">Crianças:</p>
+            <p className="text-2xl font-semibold text-gray-900">
+              {dataCheckout?.kids || 0}
+            </p>
+          </div>
 
           <div className="mt-6 space-y-3 border-t border-b py-8">
             <div className="flex items-center justify-between">
-              <p className="text-gray-400">Total</p>
-              <p className="text-lg font-semibold text-gray-900">$2399.00</p>
+              <p className="text-gray-400">Viagem</p>
+              <p className="text-lg font-semibold text-gray-900">
+                {" "}
+                {(
+                  ticket *
+                  (Number(dataCheckout?.adult) + Number(dataCheckout?.kids) / 2)
+                ).toLocaleString("pt-br", {
+                  style: "currency",
+                  currency: "BRL",
+                })}
+              </p>
             </div>
             <div className="flex items-center justify-between">
               <p className="text-gray-400">Taxas</p>
-              <p className="text-lg font-semibold text-gray-900">$8.00</p>
+              <p className="text-lg font-semibold text-gray-900">
+                {tax.toLocaleString("pt-br", {
+                  style: "currency",
+                  currency: "BRL",
+                })}
+              </p>
             </div>
           </div>
           <div className="mt-6 flex items-center justify-between">
             <p className="text-sm font-medium text-gray-900">Total</p>
             <p className="text-2xl font-semibold text-gray-900">
-              <span className="text-xs font-normal text-gray-400">USD</span>{" "}
-              2499.00
+              {(
+                ticket *
+                  (Number(dataCheckout?.adult) +
+                    Number(dataCheckout?.kids) / 2) +
+                tax
+              ).toLocaleString("pt-br", {
+                style: "currency",
+                currency: "BRL",
+              })}
             </p>
           </div>
 
