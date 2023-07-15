@@ -1,34 +1,50 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Travel App
 
-## Getting Started
+Sobre o Projeto
 
-First, run the development server:
+O projeto consiste na interface de um sistema que simula um checkout de viagem, onde podemos preencher as informações do formulário e prosseguir para a finalização da reserva.
+
+## **Para rodar o projeto**
+
+Primeiro, clone o projeto localmente:
+
+```bash
+git clone https://github.com/hellzz13/travel-app.git
+```
+
+Em seguida acesse a pasta do projeto pelo terminal, e rode o comando abaixo para instalar a dependencias.
+
+```bash
+npm install
+```
+
+Depois, rode o comando para dar start no server local:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Por fim, abra [http://localhost:3000](http://localhost:3000/) em seu navegador para visualizar o projeto.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## **Proximos passos**
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Integrar um backend onde podemos pegar as viagens e locais disponiveis pelo input de destino e origem. Também poder autenticar o usuário e salvar as informações para que ele possa ter seu histórico de viagens e outras informações que são permitidas serem salvas de acordo com a LGPD.
 
-## Learn More
+- Salvar algumas informações de preferencias do usuário.
 
-To learn more about Next.js, take a look at the following resources:
+## **Tools and libs:**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- NextJs 13.4.5
+- React 18.2.0
+- TailwindCss 3.3.2
+- Typescript 5.1.3
+- Moment ^2.29.4
+- React Hook Form 7.43.9
+- Zod 3.21.4
+- @headlessui/react: ^1.7.15,
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## **Deploy on Vercel**
 
-## Deploy on Vercel
+O projeto pode ser acessado no link:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[Projeto Travel App](https://travel-app-nu-nine.vercel.app/)
